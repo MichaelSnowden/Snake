@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		930896C819C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m in Sources */ = {isa = PBXBuildFile; fileRef = 930896C719C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m */; };
 		9343B6F319C769D2006A58BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343B6F219C769D2006A58BE /* AppDelegate.swift */; };
 		9343B6FB19C769D2006A58BE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9343B6FA19C769D2006A58BE /* Images.xcassets */; };
 		9343B6FE19C769D2006A58BE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9343B6FC19C769D2006A58BE /* LaunchScreen.xib */; };
@@ -26,6 +27,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		930896C519C7AA82000C6BD1 /* Snake-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Snake-Bridging-Header.h"; sourceTree = "<group>"; };
+		930896C619C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+dqd_arrowhead.h"; sourceTree = "<group>"; };
+		930896C719C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+dqd_arrowhead.m"; sourceTree = "<group>"; };
 		9343B6ED19C769D2006A58BE /* Snake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snake.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9343B6F119C769D2006A58BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9343B6F219C769D2006A58BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,10 +83,13 @@
 			children = (
 				9343B6F219C769D2006A58BE /* AppDelegate.swift */,
 				9343B71319C769E6006A58BE /* ViewController.swift */,
+				930896C619C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.h */,
+				930896C719C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m */,
 				9343B71519C76EB1006A58BE /* Main.storyboard */,
 				9343B6FA19C769D2006A58BE /* Images.xcassets */,
 				9343B6FC19C769D2006A58BE /* LaunchScreen.xib */,
 				9343B6F019C769D2006A58BE /* Supporting Files */,
+				930896C519C7AA82000C6BD1 /* Snake-Bridging-Header.h */,
 			);
 			path = Snake;
 			sourceTree = "<group>";
@@ -214,6 +221,7 @@
 			files = (
 				9343B71419C769E6006A58BE /* ViewController.swift in Sources */,
 				9343B6F319C769D2006A58BE /* AppDelegate.swift in Sources */,
+				930896C819C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,9 +338,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Snake/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Snake/Snake-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -340,9 +351,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Snake/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Snake/Snake-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -399,6 +412,7 @@
 				9343B70F19C769D2006A58BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9343B71019C769D2006A58BE /* Build configuration list for PBXNativeTarget "SnakeTests" */ = {
 			isa = XCConfigurationList;
@@ -407,6 +421,7 @@
 				9343B71219C769D2006A58BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,16 +7,54 @@
 //
 
 import UIKit
-import SpriteKit
 
 enum Direction : Int {
+    case Right
     case Up
     case Left
     case Down
-    case Right
 }
 
 typealias Index = (i : Int, j : Int)
+
+@IBDesignable
+class ArrowView : UIView {
+    var arrow = CAShapeLayer()
+    
+    @IBInspectable var direction : Int = Direction.Right.toRaw() {
+        didSet {
+            updateArrow()
+        }
+    }
+    
+    func updateArrow() {
+        
+        var startingPoint : CGPoint
+        var toPoint : CGPoint
+        var tailWidth : CGFloat = frame.size.width / 2
+        var headWidth : CGFloat = tailWidth * 2
+        var headLength : CGFloat = frame.size.width / 3
+        switch direction {
+        case Direction.Right.toRaw() :
+            startingPoint = CGPoint(x: 0, y: frame.size.height / 2)
+            toPoint = CGPoint(x: frame.size.width, y: frame.size.height / 2)
+        case Direction.Up.toRaw() :
+            startingPoint = CGPoint(x: frame.size.width / 2, y: 0)
+            toPoint = CGPoint(x: frame.size.width / 2, y: frame.size.height)
+        case Direction.Left.toRaw() :
+            startingPoint = CGPoint(x: frame.size.width, y: frame.size.height / 2)
+            toPoint = CGPoint(x: 0, y: frame.size.width / 2)
+        case Direction.Down.toRaw():
+            startingPoint = CGPoint(x: frame.size.width / 2, y: frame.size.height)
+            toPoint = CGPoint(x: frame.size.width / 2, y: 0)
+        default :
+            return
+        }
+        arrow.path = UIBezierPath.dqd_bezierPathWithArrowFromPoint(startingPoint, toPoint: toPoint, tailWidth: tailWidth, headWidth: headWidth, headLength: headLength).CGPath
+        arrow.removeFromSuperlayer()
+        layer.addSublayer(arrow)
+    }
+}
 
 class Snake {
     var head : Index {
@@ -34,71 +72,133 @@ class Snake {
     var segments : [Index]! = [(i: 3, j: 3), (i: 3, j: 4), (i: 3, j: 5)]
 }
 
-class Scene : SKScene {
+@IBDesignable
+class SceneView : UIView {
+    
+    @IBInspectable var cornerRadius : CGFloat = CGFloat(5) {
+        didSet {
+            for row in tiles {
+                for tile in row {
+                    tile.layer.cornerRadius = cornerRadius
+                }
+            }
+        }
+    }
+    
+    @IBInspectable var borderWidth : CGFloat = CGFloat(5) {
+        didSet {
+            for row in tiles {
+                for tile in row {
+                    tile.layer.borderWidth = borderWidth
+                }
+            }
+        }
+    }
+    
+    @IBInspectable var borderColor : UIColor = UIColor.blackColor() {
+        didSet {
+            for row in tiles {
+                for tile in row {
+                    tile.layer.borderColor = borderColor.CGColor
+                }
+            }
+        }
+    }
+    
+    @IBInspectable var tileInset : CGFloat = CGFloat(5) {
+        didSet {
+            createBackground()
+        }
+    }
+    
+    @IBInspectable var tileColor : UIColor = UIColor.lightGrayColor() {
+        didSet {
+            for row in tiles {
+                for tile in row {
+                    tile.backgroundColor = tileColor
+                }
+            }
+        }
+    }
+    @IBInspectable var numHorizontalTiles : Int = 20 {
+        didSet {
+            createBackground()
+        }
+    }
+    
+    var color : UIColor = UIColor.whiteColor() {
+        didSet {
+            self.backgroundColor = color
+        }
+    }
+    var numVerticalTiles   : Int!
     
     var direction : Direction = .Right
-    var tiles = Array<Array<SKShapeNode>>()
-    var numHorizontalTiles : Int = 20
-    var numVerticalTiles   : Int!
+    var tiles = Array<Array<UIView>>()
+    
     let snake = Snake()
-    var coin : (index : Index, node : SKNode)!
+    var coin : Index! {
+        didSet {
+            tiles[coin.i][coin.j].backgroundColor = UIColor.redColor()
+        }
+    }
     var tileSideLength : CGFloat!
     let timeFrameInterval = NSTimeInterval(0.1)
-    var lastUpdate = NSTimeInterval(0)
+    var gameUpdateTimer : NSTimer!
     
-    override func didMoveToView(view: SKView) {
-        super.didMoveToView(view)
+    override func awakeFromNib() {
+        super.awakeFromNib()
         
-        numVerticalTiles = Int(CGFloat(numHorizontalTiles) * view.frame.size.height / view.frame.size.width)
+        coin = (3, 3)
+        gameUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(timeFrameInterval, target: self, selector: "update", userInfo: nil, repeats: true)
+    }
+    
+    func createBackground() {
         
-        // add the tiles
-        tileSideLength = size.width / CGFloat(numHorizontalTiles)
-        let tileSize = CGSize(width: tileSideLength, height: tileSideLength)
+        func updateSizes() {
+            numVerticalTiles = numHorizontalTiles
+            tileSideLength = (frame.size.width - tileInset * CGFloat(numHorizontalTiles)) / CGFloat(numHorizontalTiles)
+            let tileSize = CGSize(width: tileSideLength, height: tileSideLength)
+        }
+        updateSizes()
         
-        
-        for i in 0..<numVerticalTiles {
-            var row = Array<SKShapeNode>()
-            for j in 0..<numHorizontalTiles {
-                var tile = SKShapeNode(rect: CGRect(origin: CGPoint(x: tileSideLength * CGFloat(j), y: tileSideLength * CGFloat(i)), size: tileSize), cornerRadius: 10)
-                tile.fillColor = UIColor.lightGrayColor()
-                row.append(tile)
-                addChild(tile)
+        func removeOldTiles() {
+            for row in tiles {
+                for tile in row {
+                    tile.removeFromSuperview()
+                }
             }
-            tiles.append(row)
+            tiles.removeAll(keepCapacity: false)
         }
+        removeOldTiles()
         
-        // add the coin
-        coin = (index : (i: 10, j: 10), node : SKShapeNode(rect: CGRect(origin: CGPoint(x: tileSideLength * CGFloat(10), y: tileSideLength * CGFloat(10)), size: tileSize), cornerRadius: 10) )
-        (coin.node as SKShapeNode).fillColor = UIColor.redColor()
-        addChild(coin.node)
         
-        // start the game
-        
-        let label = SKLabelNode(text: "3")
-        label.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        addChild(label)
-        
-        let countdownAction = SKAction.sequence([SKAction.repeatAction(SKAction.sequence([SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
-            let value = label.text.toInt()!
-            label.text = String(value - 1)
-        })]), count: 3), SKAction.waitForDuration(1), SKAction.runBlock({ () -> Void in
-            label.removeFromParent()
-        })])
-        
-        runAction(SKAction.sequence([countdownAction, SKAction.runBlock({ () -> Void in
-            self.paused = false
-        })]))
-    }
-    
-    override func update(currentTime: NSTimeInterval) {
-        if currentTime - lastUpdate > timeFrameInterval {
-            lastUpdate = currentTime
+        func addTiles() {
+            var rect = CGRect(origin: CGPointZero, size: CGSize(width: tileSideLength, height: tileSideLength))
             
-            gameUpdate()
+            for i in 0..<numVerticalTiles {
+                var row = [UIView]()
+                for j in 0..<numHorizontalTiles {
+                    
+                    let view = UIView(frame: rect)
+                    view.backgroundColor = UIColor.redColor()
+                    view.layer.cornerRadius = cornerRadius
+                    view.layer.borderColor = borderColor.CGColor
+                    view.layer.borderWidth = borderWidth
+                    addSubview(view)
+                    
+                    rect.origin.x = CGFloat(j) * (tileSideLength + tileInset)
+                    row.append(view)
+                }
+                rect.origin.y = CGFloat(i) * (tileSideLength + tileInset)
+                tiles.append(row)
+            }
         }
+        addTiles()
     }
-    
-    func gameUpdate() {
+
+
+    func update() {
         // Four distinct cases, in order of priority
         // 1. We hit a wall
         // 2. We hit ourself
@@ -133,16 +233,11 @@ class Scene : SKScene {
             }
         }
         
-        if head.i == coin.index.i && head.j == coin.index.j {
-            let randI = arc4random_uniform(UInt32(numVerticalTiles))
-            let randJ = arc4random_uniform(UInt32(numHorizontalTiles))
-            let x = CGFloat(randJ + 1) * tileSideLength
-            let y = CGFloat(randI + 1) * tileSideLength
-            println("i: \(randI), j: \(randJ)\nx: \(x), y: \(y)")
-            
-            coin.node.position = CGPoint(
-                x: x,
-                y: y)
+        if head.i == coin.i && head.j == coin.j {
+            let randI = Int(arc4random_uniform(UInt32(numVerticalTiles)))
+            let randJ = Int(arc4random_uniform(UInt32(numHorizontalTiles)))
+            coin.i = randI
+            coin.j = randJ
         } else {
             snake.segments.removeAtIndex(0)
         }
@@ -150,31 +245,26 @@ class Scene : SKScene {
         snake.segments.append(head)
         for i in 0..<numVerticalTiles {
             for j in 0..<numHorizontalTiles {
-                tiles[i][j].fillColor = UIColor.lightGrayColor()
+                tiles[i][j].backgroundColor = UIColor.lightGrayColor()
             }
         }
         
-        for segment in snake.segments {
-            tiles[segment.i][segment.j].fillColor = UIColor.blackColor()
+        // rendering
+        for row in tiles {
+            for tile in row {
+                tile.backgroundColor = tileColor
+            }
         }
+        for segment in snake.segments {
+            tiles[segment.i][segment.j].backgroundColor = UIColor.blackColor()
+        }
+        tiles[coin.i][coin.j].backgroundColor = UIColor.redColor()
     }
-    
+
     func gameOver() {
-        let label = SKLabelNode(text: "Game Over")
-        label.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        label.fontColor = UIColor.blackColor()
-        addChild(label)
-        self.paused = true
     }
     
-    
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        // Four cases, touches are in upper triangle, left triangle, right triangle, or bottom triangle
-        
-        let location = touches.anyObject()!.locationInNode(self)
-        
-        // for now, we'll make it a random direction
-        let newDirection = Direction.fromRaw((direction.toRaw() + 1) % 4)!
+    func tryToGoInDirection(newDirection : Direction) {
         
         var head = snake.head
         var neck = snake.neck
@@ -201,15 +291,49 @@ class Scene : SKScene {
 
 class ViewController : UIViewController {
     
+    @IBOutlet weak var sceneView: SceneView!
+    
+    @IBOutlet weak var rightArrow: ArrowView!
+    @IBOutlet weak var upArrow: ArrowView!
+    @IBOutlet weak var leftArrow: ArrowView!
+    @IBOutlet weak var downArrow: ArrowView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        rightArrow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "goRight"))
+        upArrow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "goUp"))
+        leftArrow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "goLeft"))
+        downArrow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "goDown"))
+        
+        rightArrow.updateArrow()
+        upArrow.updateArrow()
+        leftArrow.updateArrow()
+        downArrow.updateArrow()
+    }
+    
+    func goRight() {
+        sceneView.tryToGoInDirection(.Right)
+    }
+    func goUp() {
+        sceneView.tryToGoInDirection(.Up)
+    }
+    func goLeft() {
+        sceneView.tryToGoInDirection(.Left)
+    }
+    func goDown() {
+        sceneView.tryToGoInDirection(.Down)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let skView = view as SKView
-        skView.showsFPS = true
-        
-        let scene = Scene(size: skView.frame.size)
-        
-        skView.presentScene(scene)
+        sceneView.createBackground()
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
     
 }
