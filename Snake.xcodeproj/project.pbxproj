@@ -14,6 +14,7 @@
 		9343B70A19C769D2006A58BE /* SnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343B70919C769D2006A58BE /* SnakeTests.swift */; };
 		9343B71419C769E6006A58BE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343B71319C769E6006A58BE /* ViewController.swift */; };
 		9343B71619C76EB1006A58BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9343B71519C76EB1006A58BE /* Main.storyboard */; };
+		93A4B9CE19C7B8FF0015B8F5 /* MemeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A4B9CD19C7B8FF0015B8F5 /* MemeLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		9343B70919C769D2006A58BE /* SnakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeTests.swift; sourceTree = "<group>"; };
 		9343B71319C769E6006A58BE /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9343B71519C76EB1006A58BE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		93A4B9CD19C7B8FF0015B8F5 /* MemeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			children = (
 				9343B6F219C769D2006A58BE /* AppDelegate.swift */,
 				9343B71319C769E6006A58BE /* ViewController.swift */,
+				93A4B9CD19C7B8FF0015B8F5 /* MemeLabel.swift */,
 				930896C619C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.h */,
 				930896C719C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m */,
 				9343B71519C76EB1006A58BE /* Main.storyboard */,
@@ -221,6 +224,7 @@
 			files = (
 				9343B71419C769E6006A58BE /* ViewController.swift in Sources */,
 				9343B6F319C769D2006A58BE /* AppDelegate.swift in Sources */,
+				93A4B9CE19C7B8FF0015B8F5 /* MemeLabel.swift in Sources */,
 				930896C819C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

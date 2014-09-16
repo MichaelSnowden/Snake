@@ -14,15 +14,29 @@
                         <viewControllerLayoutGuide type="top" id="OVY-dt-8ym"/>
                         <viewControllerLayoutGuide type="bottom" id="nHb-js-7Gc"/>
                     </layoutGuides>
-                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="r8w-38-4iu">
+                    <view key="view" contentMode="scaleToFill" id="r8w-38-4iu">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJ5-b9-nfF" customClass="SceneView" customModule="Snake" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ceY-SK-kyY" customClass="MemeLabel" customModule="Snake" customModuleProvider="target">
+                                        <rect key="frame" x="141" y="250" width="318" height="181"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="318" id="JFU-yH-ERh"/>
+                                            <constraint firstAttribute="height" constant="181" id="hXO-1d-NU2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="ceY-SK-kyY" secondAttribute="centerX" id="018-1c-vMv"/>
                                     <constraint firstAttribute="width" secondItem="eJ5-b9-nfF" secondAttribute="height" multiplier="1:1" id="96c-6J-Y7V"/>
+                                    <constraint firstAttribute="centerY" secondItem="ceY-SK-kyY" secondAttribute="centerY" constant="-40.5" id="gHR-PS-6dl"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="numHorizontalTiles">
@@ -45,89 +59,49 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AAk-lV-ERq" customClass="ArrowView" customModule="Snake" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="direction">
-                                        <integer key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="150" y="480" width="100" height="100"/>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oUE-TK-kuj" customClass="ArrowView" customModule="Snake" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="direction">
-                                        <integer key="value" value="0"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="258" y="480" width="100" height="100"/>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gre-p8-0gC" customClass="ArrowView" customModule="Snake" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="direction">
-                                        <integer key="value" value="3"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="150" y="372" width="100" height="100"/>
-                                </variation>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12O-yR-h78" customClass="ArrowView" customModule="Snake" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="direction">
-                                        <integer key="value" value="2"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="42" y="480" width="100" height="100"/>
-                                </variation>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="eJ5-b9-nfF" firstAttribute="top" secondItem="r8w-38-4iu" secondAttribute="topMargin" id="3Jb-OM-jbP"/>
                             <constraint firstItem="eJ5-b9-nfF" firstAttribute="leading" secondItem="r8w-38-4iu" secondAttribute="leadingMargin" constant="-16" id="5gI-z9-GOY"/>
                             <constraint firstItem="eJ5-b9-nfF" firstAttribute="width" secondItem="r8w-38-4iu" secondAttribute="width" id="roK-t1-Mzx"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="AAk-lV-ERq"/>
-                                <exclude reference="oUE-TK-kuj"/>
-                                <exclude reference="gre-p8-0gC"/>
-                                <exclude reference="12O-yR-h78"/>
-                            </mask>
-                        </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="AAk-lV-ERq"/>
-                                <include reference="oUE-TK-kuj"/>
-                                <include reference="gre-p8-0gC"/>
-                                <include reference="12O-yR-h78"/>
-                            </mask>
-                        </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="FUJ-KJ-Tke" appends="YES" id="acf-Po-WHh"/>
+                            <outletCollection property="gestureRecognizers" destination="ZUc-LE-pzC" appends="YES" id="lPO-aL-Nsa"/>
+                            <outletCollection property="gestureRecognizers" destination="YR4-yf-Sz6" appends="YES" id="QCB-xa-6gt"/>
+                            <outletCollection property="gestureRecognizers" destination="GJB-Dl-wCY" appends="YES" id="vNO-Lb-TYy"/>
+                        </connections>
                     </view>
                     <connections>
-                        <outlet property="downArrow" destination="AAk-lV-ERq" id="cbH-vR-QcF"/>
-                        <outlet property="leftArrow" destination="12O-yR-h78" id="mx2-hQ-9Bu"/>
-                        <outlet property="rightArrow" destination="oUE-TK-kuj" id="NEF-1y-0gM"/>
+                        <outlet property="label" destination="ceY-SK-kyY" id="qJs-1T-31D"/>
                         <outlet property="sceneView" destination="eJ5-b9-nfF" id="jdh-Fi-Y6m"/>
-                        <outlet property="upArrow" destination="gre-p8-0gC" id="SLa-c4-5mC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDo-Fs-HAa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="FUJ-KJ-Tke">
+                    <connections>
+                        <action selector="goRight:" destination="bMq-zP-lB5" id="N8g-xK-nq2"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="up" id="ZUc-LE-pzC">
+                    <connections>
+                        <action selector="goUp:" destination="bMq-zP-lB5" id="fJQ-Mq-gNd"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="YR4-yf-Sz6">
+                    <connections>
+                        <action selector="goLeft:" destination="bMq-zP-lB5" id="Za1-Vt-cRa"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="down" id="GJB-Dl-wCY">
+                    <connections>
+                        <action selector="goDown:" destination="bMq-zP-lB5" id="wVR-BP-2Nj"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="58.5" y="190"/>
+            <point key="canvasLocation" x="58" y="190"/>
         </scene>
     </scenes>
 </document>

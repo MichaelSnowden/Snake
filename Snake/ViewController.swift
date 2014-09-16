@@ -69,12 +69,13 @@ class Snake {
         get { return segments.first! }
         set { segments[0] = tail }
     }
-    var segments : [Index]! = [(i: 3, j: 3), (i: 3, j: 4), (i: 3, j: 5)]
+    var segments : [Index]! = [(0, 0), (0, 1), (0, 2)]
 }
 
 @IBDesignable
 class SceneView : UIView {
     
+    weak var label : UILabel!
     @IBInspectable var cornerRadius : CGFloat = CGFloat(5) {
         didSet {
             for row in tiles {
@@ -136,22 +137,16 @@ class SceneView : UIView {
     var direction : Direction = .Right
     var tiles = Array<Array<UIView>>()
     
-    let snake = Snake()
-    var coin : Index! {
+    var snake = Snake()
+    var coin : Index! = (0, 0) {
         didSet {
             tiles[coin.i][coin.j].backgroundColor = UIColor.redColor()
         }
     }
     var tileSideLength : CGFloat!
-    let timeFrameInterval = NSTimeInterval(0.1)
-    var gameUpdateTimer : NSTimer!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        coin = (3, 3)
-        gameUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(timeFrameInterval, target: self, selector: "update", userInfo: nil, repeats: true)
-    }
+    let timeFrameInterval = NSTimeInterval(0.2)
+    var gameUpdateTimer : NSTimer?
+    var gameStartCountdownTimer : NSTimer?
     
     func createBackground() {
         
@@ -178,34 +173,55 @@ class SceneView : UIView {
             
             for i in 0..<numVerticalTiles {
                 var row = [UIView]()
+                rect.origin.y = CGFloat(i) * (tileSideLength + tileInset)
                 for j in 0..<numHorizontalTiles {
+                    rect.origin.x = CGFloat(j) * (tileSideLength + tileInset)
                     
                     let view = UIView(frame: rect)
-                    view.backgroundColor = UIColor.redColor()
+                    view.backgroundColor = tileColor
                     view.layer.cornerRadius = cornerRadius
                     view.layer.borderColor = borderColor.CGColor
                     view.layer.borderWidth = borderWidth
                     addSubview(view)
                     
-                    rect.origin.x = CGFloat(j) * (tileSideLength + tileInset)
                     row.append(view)
                 }
-                rect.origin.y = CGFloat(i) * (tileSideLength + tileInset)
                 tiles.append(row)
             }
         }
         addTiles()
+        
+        if label != nil {
+            bringSubviewToFront(label)
+        }
+    }
+    
+    func spawnCoin() {
+        var validSpots = Array<Index>()
+        for i in 0..<numVerticalTiles {
+            for j in 0..<numHorizontalTiles {
+                var spotIsValid = true
+                for segment in snake.segments {
+                    if i == segment.i && j == segment.j {
+                        spotIsValid = false
+                        break
+                    }
+                }
+                if i == coin.i && j == coin.j {
+                    spotIsValid = false
+                }
+                if spotIsValid {
+                    validSpots.append((i, j))
+                }
+            }
+        }
+        
+        let randomIndex = arc4random_uniform(UInt32(validSpots.count))
+        let randomValidSpot = validSpots[Int(randomIndex)]
+        coin = randomValidSpot
     }
 
-
     func update() {
-        // Four distinct cases, in order of priority
-        // 1. We hit a wall
-        // 2. We hit ourself
-        // 3. We hit a coin
-        // 4. We didn't hit anything
-        
-        // Move the head forward one
         var head = snake.head
         var neck = snake.neck
         switch direction {
@@ -214,9 +230,9 @@ class SceneView : UIView {
         case .Right :
             ++head.j
         case .Up :
-            ++head.i
-        case .Down :
             --head.i
+        case .Down :
+            ++head.i
         }
         
         // 1. We hit a wall -> gameOver
@@ -234,10 +250,7 @@ class SceneView : UIView {
         }
         
         if head.i == coin.i && head.j == coin.j {
-            let randI = Int(arc4random_uniform(UInt32(numVerticalTiles)))
-            let randJ = Int(arc4random_uniform(UInt32(numHorizontalTiles)))
-            coin.i = randI
-            coin.j = randJ
+            spawnCoin()
         } else {
             snake.segments.removeAtIndex(0)
         }
@@ -260,8 +273,40 @@ class SceneView : UIView {
         }
         tiles[coin.i][coin.j].backgroundColor = UIColor.redColor()
     }
+    
+    func start(recognizer: UITapGestureRecognizer) {
+        removeGestureRecognizer(recognizer)
+        start()
+    }
+    func start() {
+        label.hidden = false
+        label.text = "3"
+        snake = Snake()
+        direction = .Right
+        
+        spawnCoin()
+        gameStartCountdownTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "decrementTimer", userInfo: nil, repeats: true)
+    }
+    
+    func decrementTimer() {
+        let value = label.text!.toInt()!
+        if value > 0 {
+            label.text = String(value - 1)
+        } else {
+            label.hidden = true
+            gameStartCountdownTimer!.invalidate()
+            gameStartCountdownTimer = nil
+            gameUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(timeFrameInterval, target: self, selector: "update", userInfo: nil, repeats: true)
+        }
+    }
 
     func gameOver() {
+        label.hidden = false
+        label.text = "Game Over!\nTap to restart"
+        gameUpdateTimer!.invalidate()
+        gameUpdateTimer = nil
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: "start:"))
     }
     
     func tryToGoInDirection(newDirection : Direction) {
@@ -272,18 +317,26 @@ class SceneView : UIView {
         case .Left :
             if !(neck.i == head.i && neck.j == head.j + 1) {
                 direction = newDirection
+            } else {
+                return
             }
         case .Right :
             if !(neck.i == head.i && neck.j == head.j - 1) {
                 direction = newDirection
+            } else {
+                return
             }
         case .Up :
             if !(neck.i == head.i + 1 && neck.j == head.j) {
                 direction = newDirection
+            } else {
+                return
             }
         case .Down :
             if !(neck.i == head.i - 1 && neck.j == head.j) {
                 direction = newDirection
+            } else {
+                return
             }
         }
     }
@@ -292,36 +345,25 @@ class SceneView : UIView {
 class ViewController : UIViewController {
     
     @IBOutlet weak var sceneView: SceneView!
-    
-    @IBOutlet weak var rightArrow: ArrowView!
-    @IBOutlet weak var upArrow: ArrowView!
-    @IBOutlet weak var leftArrow: ArrowView!
-    @IBOutlet weak var downArrow: ArrowView!
+    @IBOutlet weak var label: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        rightArrow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "goRight"))
-        upArrow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "goUp"))
-        leftArrow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "goLeft"))
-        downArrow.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "goDown"))
-        
-        rightArrow.updateArrow()
-        upArrow.updateArrow()
-        leftArrow.updateArrow()
-        downArrow.updateArrow()
+        sceneView.createBackground()
+        sceneView.label = label
+        sceneView.start()
     }
     
-    func goRight() {
+    @IBAction func goRight(sender: UISwipeGestureRecognizer) {
         sceneView.tryToGoInDirection(.Right)
     }
-    func goUp() {
+    @IBAction func goUp(sender: UISwipeGestureRecognizer) {
         sceneView.tryToGoInDirection(.Up)
     }
-    func goLeft() {
+    @IBAction func goLeft(sender: UISwipeGestureRecognizer) {
         sceneView.tryToGoInDirection(.Left)
     }
-    func goDown() {
+    @IBAction func goDown(sender: UISwipeGestureRecognizer) {
         sceneView.tryToGoInDirection(.Down)
     }
     
