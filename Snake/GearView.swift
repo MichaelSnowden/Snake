@@ -10,53 +10,21 @@ import UIKit
 
 @IBDesignable
 class GearView : UIView {
-    
-    var gearLayer = CAShapeLayer()
-    
-    @IBInspectable var numberOfTeeth : UInt = 1 {
+    @IBInspectable var cornerRadius : CGFloat = CGFloat(0) {
         didSet {
-            update()
+            layer.cornerRadius = cornerRadius
         }
     }
     
-    @IBInspectable var borderWidthToWidthRatio : CGFloat = 1 {
+    @IBInspectable var borderWidth : CGFloat = CGFloat(0) {
         didSet {
-            update()
+            layer.borderWidth = borderWidth
         }
     }
     
-    @IBInspectable var innerRadiusToWidthRatio : CGFloat = 1 {
+    @IBInspectable var borderColor : UIColor = UIColor.clearColor() {
         didSet {
-            update()
+            layer.borderColor = borderColor.CGColor
         }
-    }
-    
-    @IBInspectable var outerRadiusToWidthRatio : CGFloat = 1 {
-        didSet {
-            update()
-        }
-    }
-    
-    @IBInspectable var toothGapInRadians : CGFloat = 1 {
-        didSet {
-            update()
-        }
-    }
-    
-    @IBInspectable var toothWidthToToothGapRatio : CGFloat = 1 {
-        didSet {
-            update()
-        }
-    }
-    
-    @IBInspectable var toothHeightToWidthRatio : CGFloat = 1 {
-        didSet {
-            update()
-        }
-    }
-    
-    func update() {
-        let path = UIBezierPath()
-        
     }
 }

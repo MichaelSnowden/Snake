@@ -17,7 +17,16 @@
 		9343B70A19C769D2006A58BE /* SnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343B70919C769D2006A58BE /* SnakeTests.swift */; };
 		9343B71419C769E6006A58BE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343B71319C769E6006A58BE /* ViewController.swift */; };
 		9343B71619C76EB1006A58BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9343B71519C76EB1006A58BE /* Main.storyboard */; };
+		9357BC7919C811430030BBC3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9357BC7819C811430030BBC3 /* SettingsViewController.swift */; };
+		9357BC8519C812850030BBC3 /* nko_brightness_guide.png in Resources */ = {isa = PBXBuildFile; fileRef = 9357BC7C19C812850030BBC3 /* nko_brightness_guide.png */; };
+		9357BC8619C812850030BBC3 /* nko_brightness_guide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9357BC7D19C812850030BBC3 /* nko_brightness_guide@2x.png */; };
+		9357BC8719C812850030BBC3 /* nko_colormap.png in Resources */ = {isa = PBXBuildFile; fileRef = 9357BC7E19C812850030BBC3 /* nko_colormap.png */; };
+		9357BC8819C812850030BBC3 /* NKOColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9357BC8019C812850030BBC3 /* NKOColorPickerView.m */; };
+		9357BC8919C812850030BBC3 /* NKOColorPickerView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9357BC8119C812850030BBC3 /* NKOColorPickerView.podspec */; };
+		9357BC8A19C812850030BBC3 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 9357BC8219C812850030BBC3 /* README.md */; };
+		9357BC8B19C812850030BBC3 /* screenshot-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 9357BC8419C812850030BBC3 /* screenshot-ios.png */; };
 		9364E5DD19C7DE610026E8A1 /* GearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9364E5DC19C7DE610026E8A1 /* GearView.swift */; };
+		937429EB19C7E9E30054F148 /* SnakeGear.png in Resources */ = {isa = PBXBuildFile; fileRef = 937429EA19C7E9E30054F148 /* SnakeGear.png */; };
 		93A4B9CE19C7B8FF0015B8F5 /* MemeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A4B9CD19C7B8FF0015B8F5 /* MemeLabel.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +57,17 @@
 		9343B70919C769D2006A58BE /* SnakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeTests.swift; sourceTree = "<group>"; };
 		9343B71319C769E6006A58BE /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9343B71519C76EB1006A58BE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		9357BC7819C811430030BBC3 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9357BC7C19C812850030BBC3 /* nko_brightness_guide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nko_brightness_guide.png; sourceTree = "<group>"; };
+		9357BC7D19C812850030BBC3 /* nko_brightness_guide@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nko_brightness_guide@2x.png"; sourceTree = "<group>"; };
+		9357BC7E19C812850030BBC3 /* nko_colormap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nko_colormap.png; sourceTree = "<group>"; };
+		9357BC7F19C812850030BBC3 /* NKOColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NKOColorPickerView.h; sourceTree = "<group>"; };
+		9357BC8019C812850030BBC3 /* NKOColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NKOColorPickerView.m; sourceTree = "<group>"; };
+		9357BC8119C812850030BBC3 /* NKOColorPickerView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NKOColorPickerView.podspec; sourceTree = "<group>"; };
+		9357BC8219C812850030BBC3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9357BC8419C812850030BBC3 /* screenshot-ios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "screenshot-ios.png"; sourceTree = "<group>"; };
 		9364E5DC19C7DE610026E8A1 /* GearView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GearView.swift; sourceTree = "<group>"; };
+		937429EA19C7E9E30054F148 /* SnakeGear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SnakeGear.png; sourceTree = "<group>"; };
 		93A4B9CD19C7B8FF0015B8F5 /* MemeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,13 +112,16 @@
 		9343B6EF19C769D2006A58BE /* Snake */ = {
 			isa = PBXGroup;
 			children = (
+				937429EA19C7E9E30054F148 /* SnakeGear.png */,
 				9343B6F219C769D2006A58BE /* AppDelegate.swift */,
 				9343B71319C769E6006A58BE /* ViewController.swift */,
+				9357BC7819C811430030BBC3 /* SettingsViewController.swift */,
 				93A4B9CD19C7B8FF0015B8F5 /* MemeLabel.swift */,
 				9330982719C7CF52001B9105 /* GameCenterView.swift */,
 				9364E5DC19C7DE610026E8A1 /* GearView.swift */,
 				930896C619C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.h */,
 				930896C719C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m */,
+				9357BC7A19C812850030BBC3 /* NKO-Color-Picker-View-iOS-master */,
 				9330982B19C7DA31001B9105 /* GameCenterIcon.png */,
 				9343B71519C76EB1006A58BE /* Main.storyboard */,
 				9343B6FA19C769D2006A58BE /* Images.xcassets */,
@@ -133,6 +155,37 @@
 				9343B70819C769D2006A58BE /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9357BC7A19C812850030BBC3 /* NKO-Color-Picker-View-iOS-master */ = {
+			isa = PBXGroup;
+			children = (
+				9357BC7B19C812850030BBC3 /* Assets */,
+				9357BC7F19C812850030BBC3 /* NKOColorPickerView.h */,
+				9357BC8019C812850030BBC3 /* NKOColorPickerView.m */,
+				9357BC8119C812850030BBC3 /* NKOColorPickerView.podspec */,
+				9357BC8219C812850030BBC3 /* README.md */,
+				9357BC8319C812850030BBC3 /* Screenshots */,
+			);
+			path = "NKO-Color-Picker-View-iOS-master";
+			sourceTree = "<group>";
+		};
+		9357BC7B19C812850030BBC3 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9357BC7C19C812850030BBC3 /* nko_brightness_guide.png */,
+				9357BC7D19C812850030BBC3 /* nko_brightness_guide@2x.png */,
+				9357BC7E19C812850030BBC3 /* nko_colormap.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		9357BC8319C812850030BBC3 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				9357BC8419C812850030BBC3 /* screenshot-ios.png */,
+			);
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,9 +269,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				9343B71619C76EB1006A58BE /* Main.storyboard in Resources */,
+				9357BC8B19C812850030BBC3 /* screenshot-ios.png in Resources */,
 				9343B6FE19C769D2006A58BE /* LaunchScreen.xib in Resources */,
+				9357BC8519C812850030BBC3 /* nko_brightness_guide.png in Resources */,
+				9357BC8619C812850030BBC3 /* nko_brightness_guide@2x.png in Resources */,
+				937429EB19C7E9E30054F148 /* SnakeGear.png in Resources */,
 				9343B6FB19C769D2006A58BE /* Images.xcassets in Resources */,
+				9357BC8919C812850030BBC3 /* NKOColorPickerView.podspec in Resources */,
 				9330982C19C7DA31001B9105 /* GameCenterIcon.png in Resources */,
+				9357BC8719C812850030BBC3 /* nko_colormap.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,10 +297,13 @@
 			files = (
 				9343B71419C769E6006A58BE /* ViewController.swift in Sources */,
 				9364E5DD19C7DE610026E8A1 /* GearView.swift in Sources */,
+				9357BC7919C811430030BBC3 /* SettingsViewController.swift in Sources */,
 				9343B6F319C769D2006A58BE /* AppDelegate.swift in Sources */,
 				9330982819C7CF52001B9105 /* GameCenterView.swift in Sources */,
 				93A4B9CE19C7B8FF0015B8F5 /* MemeLabel.swift in Sources */,
+				9357BC8A19C812850030BBC3 /* README.md in Sources */,
 				930896C819C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m in Sources */,
+				9357BC8819C812850030BBC3 /* NKOColorPickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

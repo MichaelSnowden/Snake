@@ -16,48 +16,16 @@ enum Direction : Int {
     case Down
 }
 
+enum Difficulty {
+    case Easy
+    case Medium
+    case Hard
+}
+
 typealias Index = (i : Int, j : Int)
+typealias Settings = (difficulty: Difficulty, sound: Bool, borderWidth: CGFloat, tileInset: CGFloat, tileColor: UIColor, borderColor: UIColor)
 
 var gameCenterFeaturesEnabled  = false
-
-@IBDesignable
-class ArrowView : UIView {
-    var arrow = CAShapeLayer()
-    
-    @IBInspectable var direction : Int = Direction.Right.toRaw() {
-        didSet {
-            updateArrow()
-        }
-    }
-    
-    func updateArrow() {
-        
-        var startingPoint : CGPoint
-        var toPoint : CGPoint
-        var tailWidth : CGFloat = frame.size.width / 2
-        var headWidth : CGFloat = tailWidth * 2
-        var headLength : CGFloat = frame.size.width / 3
-        switch direction {
-        case Direction.Right.toRaw() :
-            startingPoint = CGPoint(x: 0, y: frame.size.height / 2)
-            toPoint = CGPoint(x: frame.size.width, y: frame.size.height / 2)
-        case Direction.Up.toRaw() :
-            startingPoint = CGPoint(x: frame.size.width / 2, y: 0)
-            toPoint = CGPoint(x: frame.size.width / 2, y: frame.size.height)
-        case Direction.Left.toRaw() :
-            startingPoint = CGPoint(x: frame.size.width, y: frame.size.height / 2)
-            toPoint = CGPoint(x: 0, y: frame.size.width / 2)
-        case Direction.Down.toRaw():
-            startingPoint = CGPoint(x: frame.size.width / 2, y: frame.size.height)
-            toPoint = CGPoint(x: frame.size.width / 2, y: 0)
-        default :
-            return
-        }
-        arrow.path = UIBezierPath.dqd_bezierPathWithArrowFromPoint(startingPoint, toPoint: toPoint, tailWidth: tailWidth, headWidth: headWidth, headLength: headLength).CGPath
-        arrow.removeFromSuperlayer()
-        layer.addSublayer(arrow)
-    }
-}
 
 class Snake {
     var head : Index {
@@ -130,10 +98,12 @@ class SceneView : UIView {
             createBackground()
         }
     }
-    
-    var color : UIColor = UIColor.whiteColor() {
+    var settings : Settings = (difficulty: Difficulty.Easy, sound: true, borderWidth: CGFloat(5), tileInset: CGFloat(5), tileColor: UIColor.clearColor(), borderColor: UIColor.blackColor()) {
         didSet {
-            self.backgroundColor = color
+            self.borderWidth = settings.borderWidth
+            self.tileColor = settings.tileColor
+            self.borderColor = settings.borderColor
+            self.tileInset = settings.tileInset
         }
     }
     var numVerticalTiles   : Int!
@@ -153,7 +123,7 @@ class SceneView : UIView {
     var gameStartCountdownTimer : NSTimer?
     
     func createBackground() {
-        
+        println("Creating background")
         func updateSizes() {
             numVerticalTiles = numHorizontalTiles
             tileSideLength = (frame.size.width - tileInset * CGFloat(numHorizontalTiles)) / CGFloat(numHorizontalTiles)
@@ -253,31 +223,19 @@ class SceneView : UIView {
             }
         }
         
+        tiles[head.i][head.j].backgroundColor = UIColor.blackColor()
+        
         if head.i == coin.i && head.j == coin.j {
             spawnCoin()
             let score = scoreLabel.text!.toInt()!
             scoreLabel.text = String(score + 1)
         } else {
+            let tail = snake.segments[0]
+            tiles[tail.i][tail.j].backgroundColor = UIColor.greenColor()
             snake.segments.removeAtIndex(0)
         }
         
         snake.segments.append(head)
-        for i in 0..<numVerticalTiles {
-            for j in 0..<numHorizontalTiles {
-                tiles[i][j].backgroundColor = UIColor.lightGrayColor()
-            }
-        }
-        
-        // rendering
-        for row in tiles {
-            for tile in row {
-                tile.backgroundColor = tileColor
-            }
-        }
-        for segment in snake.segments {
-            tiles[segment.i][segment.j].backgroundColor = UIColor.blackColor()
-        }
-        tiles[coin.i][coin.j].backgroundColor = UIColor.redColor()
     }
     
     func start(recognizer: UITapGestureRecognizer) {
@@ -285,10 +243,14 @@ class SceneView : UIView {
         start()
     }
     func start() {
+        createBackground()
         label.hidden = false
         label.text = "2"
         scoreLabel.text = "0"
         snake = Snake()
+        for segment in snake.segments {
+            tiles[segment.i][segment.j].backgroundColor = UIColor.blackColor()
+        }
         direction = .Right
         
         spawnCoin()
@@ -318,12 +280,8 @@ class SceneView : UIView {
             GKScore.reportScores([gkScore], withCompletionHandler: { (error : NSError!) -> Void in
                 if (error == nil) {
                     println("Success submitting score :D")
-                    let alertView = UIAlertView(title: "Score submitted", message: "Your score of \(score) was submitted to GameCenter!", delegate: nil, cancelButtonTitle: "OK")
-                    alertView.show()
                 } else {
                     println("Failure submitting score D: \(error)")
-                    let alertView = UIAlertView(title: "Your score could not be submitted", message: "Your score of \(score) could not be submitted to GameCenter.", delegate: nil, cancelButtonTitle: "OK")
-                    alertView.show()
                 }
             })
             
@@ -350,25 +308,25 @@ class SceneView : UIView {
         var neck = snake.neck
         switch newDirection {
         case .Left :
-            if !(neck.i == head.i && neck.j == head.j + 1) {
-                direction = newDirection
-            } else {
-                return
-            }
-        case .Right :
             if !(neck.i == head.i && neck.j == head.j - 1) {
                 direction = newDirection
             } else {
                 return
             }
+        case .Right :
+            if !(neck.i == head.i && neck.j == head.j + 1) {
+                direction = newDirection
+            } else {
+                return
+            }
         case .Up :
-            if !(neck.i == head.i + 1 && neck.j == head.j) {
+            if !(neck.i == head.i - 1 && neck.j == head.j) {
                 direction = newDirection
             } else {
                 return
             }
         case .Down :
-            if !(neck.i == head.i - 1 && neck.j == head.j) {
+            if !(neck.i == head.i + 1 && neck.j == head.j) {
                 direction = newDirection
             } else {
                 return
@@ -377,11 +335,12 @@ class SceneView : UIView {
     }
 }
 
-class ViewController : UIViewController {
+class ViewController : UIViewController, SettingsViewControllerDelegate {
     
     @IBOutlet weak var scoreLabel: MemeLabel!
     @IBOutlet weak var sceneView: SceneView!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var gearView: GearView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -389,7 +348,6 @@ class ViewController : UIViewController {
         label.text = "Tap to start!"
         scoreLabel.text = "0"
         
-        sceneView.createBackground()
         sceneView.label = label
         sceneView.scoreLabel = scoreLabel
         sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "start:"))
@@ -407,8 +365,30 @@ class ViewController : UIViewController {
                 gameCenterFeaturesEnabled = false
             }
         }
+        
+        gearView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "goToSettings"))
     }
     
+    func goToSettings() {
+        self.performSegueWithIdentifier("goToSettings", sender: self)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        struct Static {
+            static var onceToken : dispatch_once_t = 0
+        }
+        dispatch_once(&Static.onceToken) {
+            self.sceneView.createBackground()
+            var settings = self.sceneView.settings
+            settings.borderWidth = self.sceneView.borderWidth
+            settings.tileColor = self.sceneView.tileColor
+            settings.borderColor = self.sceneView.borderColor
+            settings.tileInset = self.sceneView.tileInset
+            self.sceneView.settings = settings
+        }
+    }
+
     func start(recognizer : UITapGestureRecognizer) {
         sceneView.removeGestureRecognizer(recognizer)
         sceneView.start()
@@ -426,16 +406,20 @@ class ViewController : UIViewController {
     @IBAction func goDown(sender: UISwipeGestureRecognizer) {
         sceneView.tryToGoInDirection(.Down)
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        sceneView.createBackground()
-    }
-    
+
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "goToSettings" {
+            let settingsViewController = segue.destinationViewController as SettingsViewController
+            settingsViewController.settings = sceneView.settings
+        }
+    }
     
+    // MARK: SettingsViewControllerDelegate
+    func settingsViewController(settingsViewController: SettingsViewController, didFinishWithSettings: Settings) {
+        sceneView.settings = didFinishWithSettings
+    }
 }
