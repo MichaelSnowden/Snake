@@ -29,17 +29,32 @@ class SettingsViewController : UIViewController {
     @IBOutlet weak var backgroundColorButton: UIButton!
     
     @IBAction func changeTileColor(sender: UIButton) {
-        let colorPickerView = NKOColorPickerView(frame: CGRect(origin: CGPointZero, size: view.frame.size), color: settings.tileColor) { (color : UIColor!) -> Void in
+        let colorPickerView = NKOColorPickerView(frame: CGRect(origin: CGPointZero, size: CGSize(width: view.frame.size.width, height: view.frame.size.height - 50)), color: settings.tileColor) { (color : UIColor!) -> Void in
             self.settings.tileColor = color
+            self.tileColorButton.backgroundColor = color
         }
-        
-        view.addSubview(colorPickerView)
+        addDoneButtonToColorPickerView(colorPickerView)
     }
     
     @IBAction func changeBorderColor(sender: UIButton) {
-        let colorPickerView = NKOColorPickerView(frame: CGRect(origin: CGPointZero, size: view.frame.size), color: settings.tileColor) { (color : UIColor!) -> Void in
+        let colorPickerView = NKOColorPickerView(frame: CGRect(origin: CGPointZero, size: CGSize(width: view.frame.size.width, height: view.frame.size.height - 50)), color: settings.tileColor) { (color : UIColor!) -> Void in
             self.settings.borderColor = color
+            self.backgroundColorButton.backgroundColor = color
         }
+        addDoneButtonToColorPickerView(colorPickerView)
+    }
+    
+    func addDoneButtonToColorPickerView(colorPickerView : NKOColorPickerView) {
+        let buttonSize = CGSize(width: 100, height: 50)
+        let point = CGPoint(x: view.frame.size.width / 2 - buttonSize.width / 2, y: view.frame.size.height - 50)
+        let button = UIButton(frame: CGRect(origin: point, size: buttonSize))
+        button.layer.cornerRadius = 10
+        button.backgroundColor = UIColor.blackColor()
+        button.addTarget(colorPickerView, action: "removeFromSuperview", forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(button, action: "removeFromSuperview", forControlEvents: UIControlEvents.TouchUpInside)
+        button.setTitle("Done", forState: UIControlState.Normal)
+        
         view.addSubview(colorPickerView)
+        view.addSubview(button)
     }
 }
