@@ -14,7 +14,7 @@ class MemeLabel : UILabel {
         let shadowOffset = self.shadowOffset
         
         let c = UIGraphicsGetCurrentContext()
-        CGContextSetLineWidth(c, 10)
+        CGContextSetLineWidth(c, 3)
         CGContextSetLineJoin(c, kCGLineJoinRound)
         
         CGContextSetTextDrawingMode(c, kCGTextStroke)

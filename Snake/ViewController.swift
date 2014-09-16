@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GameKit
 
 enum Direction : Int {
     case Right
@@ -16,6 +17,8 @@ enum Direction : Int {
 }
 
 typealias Index = (i : Int, j : Int)
+
+var gameCenterFeaturesEnabled  = false
 
 @IBDesignable
 class ArrowView : UIView {
@@ -76,6 +79,7 @@ class Snake {
 class SceneView : UIView {
     
     weak var label : UILabel!
+    weak var scoreLabel : UILabel!
     @IBInspectable var cornerRadius : CGFloat = CGFloat(5) {
         didSet {
             for row in tiles {
@@ -251,6 +255,8 @@ class SceneView : UIView {
         
         if head.i == coin.i && head.j == coin.j {
             spawnCoin()
+            let score = scoreLabel.text!.toInt()!
+            scoreLabel.text = String(score + 1)
         } else {
             snake.segments.removeAtIndex(0)
         }
@@ -280,7 +286,8 @@ class SceneView : UIView {
     }
     func start() {
         label.hidden = false
-        label.text = "3"
+        label.text = "2"
+        scoreLabel.text = "0"
         snake = Snake()
         direction = .Right
         
@@ -301,6 +308,34 @@ class SceneView : UIView {
     }
 
     func gameOver() {
+        let score = scoreLabel.text!.toInt()!
+        if (gameCenterFeaturesEnabled) {
+            
+            let player = GKLocalPlayer.localPlayer()
+            let gkScore = GKScore(leaderboardIdentifier: "com.MichaelSnowden.JustSnake.HighScores", player: player)
+            gkScore.value = Int64(score)
+            
+            GKScore.reportScores([gkScore], withCompletionHandler: { (error : NSError!) -> Void in
+                if (error == nil) {
+                    println("Success submitting score :D")
+                    let alertView = UIAlertView(title: "Score submitted", message: "Your score of \(score) was submitted to GameCenter!", delegate: nil, cancelButtonTitle: "OK")
+                    alertView.show()
+                } else {
+                    println("Failure submitting score D: \(error)")
+                    let alertView = UIAlertView(title: "Your score could not be submitted", message: "Your score of \(score) could not be submitted to GameCenter.", delegate: nil, cancelButtonTitle: "OK")
+                    alertView.show()
+                }
+            })
+            
+        } else {
+            let highScore = NSUserDefaults.standardUserDefaults().integerForKey("com.MichaelSnowden.JustSnake.highScore")
+            if score > highScore {
+                NSUserDefaults.standardUserDefaults().setInteger(score, forKey: "com.MichaelSnowden.JustSnake.highScore")
+                NSUserDefaults.standardUserDefaults().synchronize()
+            }
+            
+        }
+        
         label.hidden = false
         label.text = "Game Over!\nTap to restart"
         gameUpdateTimer!.invalidate()
@@ -344,13 +379,38 @@ class SceneView : UIView {
 
 class ViewController : UIViewController {
     
+    @IBOutlet weak var scoreLabel: MemeLabel!
     @IBOutlet weak var sceneView: SceneView!
     @IBOutlet weak var label: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        label.hidden = false
+        label.text = "Tap to start!"
+        scoreLabel.text = "0"
+        
         sceneView.createBackground()
         sceneView.label = label
+        sceneView.scoreLabel = scoreLabel
+        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "start:"))
+        
+        weak var localPlayer = GKLocalPlayer.localPlayer()
+        localPlayer!.authenticateHandler = { (viewController : UIViewController?, error : NSError?) -> Void in
+            
+            if localPlayer!.authenticated {
+                // enable game center
+                gameCenterFeaturesEnabled = true
+            } else if let vc = viewController {
+                self.presentViewController(vc, animated: true, completion: nil)
+            } else {
+                // disable game center
+                gameCenterFeaturesEnabled = false
+            }
+        }
+    }
+    
+    func start(recognizer : UITapGestureRecognizer) {
+        sceneView.removeGestureRecognizer(recognizer)
         sceneView.start()
     }
     

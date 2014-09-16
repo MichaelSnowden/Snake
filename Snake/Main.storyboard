@@ -18,11 +18,89 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJ5-b9-nfF" customClass="SceneView" customModule="Snake" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OuC-hE-WBU" customClass="GameCenterView" customModule="Snake" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GameCenterIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZZk-1W-qMA">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="ZZk-1W-qMA" secondAttribute="height" multiplier="1:1" id="H6q-8I-Shc"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="H6q-8I-Shc"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="H6q-8I-Shc"/>
+                                            </mask>
+                                        </variation>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="5wb-DD-R47"/>
+                                    <constraint firstAttribute="centerY" secondItem="ZZk-1W-qMA" secondAttribute="centerY" id="QZv-uI-ISu"/>
+                                    <constraint firstAttribute="centerX" secondItem="ZZk-1W-qMA" secondAttribute="centerX" id="aom-X5-TlH"/>
+                                    <constraint firstItem="ZZk-1W-qMA" firstAttribute="width" secondItem="OuC-hE-WBU" secondAttribute="width" id="cfp-R5-kP4">
+                                        <variation key="heightClass=regular" constant="-16"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" secondItem="OuC-hE-WBU" secondAttribute="height" multiplier="1:1" id="nuC-dK-G7X"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="21"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="7"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="ZZk-1W-qMA"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="5wb-DD-R47"/>
+                                        <exclude reference="nuC-dK-G7X"/>
+                                        <exclude reference="QZv-uI-ISu"/>
+                                        <exclude reference="aom-X5-TlH"/>
+                                        <exclude reference="cfp-R5-kP4"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="subviews">
+                                        <include reference="ZZk-1W-qMA"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="5wb-DD-R47"/>
+                                        <include reference="nuC-dK-G7X"/>
+                                        <include reference="QZv-uI-ISu"/>
+                                        <include reference="aom-X5-TlH"/>
+                                        <include reference="cfp-R5-kP4"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                    <rect key="frame" x="384" y="20" width="0.0" height="0.0"/>
+                                </variation>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5D-XA-C88" customClass="MemeLabel" customModule="Snake" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lyd-cC-VAI" customClass="MemeLabel" customModule="Snake" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJ5-b9-nfF" customClass="SceneView" customModule="Snake" customModuleProvider="target">
+                                <rect key="frame" x="16" y="12" width="568" height="568"/>
                                 <subviews>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ceY-SK-kyY" customClass="MemeLabel" customModule="Snake" customModuleProvider="target">
-                                        <rect key="frame" x="141" y="250" width="318" height="181"/>
+                                        <rect key="frame" x="125" y="193.5" width="318" height="181"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="318" id="JFU-yH-ERh"/>
                                             <constraint firstAttribute="height" constant="181" id="hXO-1d-NU2"/>
@@ -36,37 +114,100 @@
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="ceY-SK-kyY" secondAttribute="centerX" id="018-1c-vMv"/>
                                     <constraint firstAttribute="width" secondItem="eJ5-b9-nfF" secondAttribute="height" multiplier="1:1" id="96c-6J-Y7V"/>
-                                    <constraint firstAttribute="centerY" secondItem="ceY-SK-kyY" secondAttribute="centerY" constant="-40.5" id="gHR-PS-6dl"/>
+                                    <constraint firstAttribute="width" secondItem="eJ5-b9-nfF" secondAttribute="height" multiplier="1:1" id="BsI-RM-3B9"/>
+                                    <constraint firstAttribute="centerY" secondItem="ceY-SK-kyY" secondAttribute="centerY" id="gHR-PS-6dl"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="numHorizontalTiles">
                                         <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="5"/>
+                                        <real key="value" value="24"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="6"/>
+                                        <real key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="tileInset">
-                                        <real key="value" value="1"/>
+                                        <real key="value" value="2"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                         <color key="value" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="tileColor">
-                                        <color key="value" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="value" red="0.0078431377190000002" green="0.99215692280000001" blue="0.03529411927" alpha="1" colorSpace="deviceRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="96c-6J-Y7V"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="constraints">
+                                        <exclude reference="96c-6J-Y7V"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="Lyd-cC-VAI" firstAttribute="leading" secondItem="r8w-38-4iu" secondAttribute="leadingMargin" id="1ta-bb-0hu"/>
                             <constraint firstItem="eJ5-b9-nfF" firstAttribute="top" secondItem="r8w-38-4iu" secondAttribute="topMargin" id="3Jb-OM-jbP"/>
                             <constraint firstItem="eJ5-b9-nfF" firstAttribute="leading" secondItem="r8w-38-4iu" secondAttribute="leadingMargin" constant="-16" id="5gI-z9-GOY"/>
+                            <constraint firstItem="nHb-js-7Gc" firstAttribute="top" secondItem="eJ5-b9-nfF" secondAttribute="bottom" id="6ri-AO-JYf"/>
+                            <constraint firstAttribute="width" secondItem="OuC-hE-WBU" secondAttribute="width" id="Aa3-SN-d2d">
+                                <variation key="heightClass=regular" constant="500"/>
+                            </constraint>
+                            <constraint firstAttribute="width" secondItem="eJ5-b9-nfF" secondAttribute="width" constant="32" id="GBt-4s-YSK"/>
+                            <constraint firstItem="nHb-js-7Gc" firstAttribute="top" secondItem="eJ5-b9-nfF" secondAttribute="bottom" constant="20" id="PMi-n9-ugf"/>
+                            <constraint firstItem="OuC-hE-WBU" firstAttribute="trailing" secondItem="r8w-38-4iu" secondAttribute="trailingMargin" id="TUC-OD-3PB"/>
+                            <constraint firstItem="B5D-XA-C88" firstAttribute="leading" secondItem="r8w-38-4iu" secondAttribute="leadingMargin" id="UuV-uF-pkH"/>
+                            <constraint firstItem="Lyd-cC-VAI" firstAttribute="top" secondItem="B5D-XA-C88" secondAttribute="bottom" constant="0.5" id="bFQ-8X-2cf"/>
+                            <constraint firstAttribute="centerX" secondItem="eJ5-b9-nfF" secondAttribute="centerX" id="duU-7T-P0V"/>
                             <constraint firstItem="eJ5-b9-nfF" firstAttribute="width" secondItem="r8w-38-4iu" secondAttribute="width" id="roK-t1-Mzx"/>
+                            <constraint firstItem="B5D-XA-C88" firstAttribute="top" secondItem="OVY-dt-8ym" secondAttribute="bottom" id="sr8-iE-mpv"/>
+                            <constraint firstItem="OuC-hE-WBU" firstAttribute="top" secondItem="OVY-dt-8ym" secondAttribute="bottom" id="vRa-6b-1mk"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="OuC-hE-WBU"/>
+                                <exclude reference="B5D-XA-C88"/>
+                                <exclude reference="Lyd-cC-VAI"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="UuV-uF-pkH"/>
+                                <exclude reference="sr8-iE-mpv"/>
+                                <exclude reference="1ta-bb-0hu"/>
+                                <exclude reference="bFQ-8X-2cf"/>
+                                <exclude reference="Aa3-SN-d2d"/>
+                                <exclude reference="TUC-OD-3PB"/>
+                                <exclude reference="vRa-6b-1mk"/>
+                                <exclude reference="3Jb-OM-jbP"/>
+                                <exclude reference="5gI-z9-GOY"/>
+                                <exclude reference="roK-t1-Mzx"/>
+                                <exclude reference="6ri-AO-JYf"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="subviews">
+                                <include reference="OuC-hE-WBU"/>
+                                <include reference="B5D-XA-C88"/>
+                                <include reference="Lyd-cC-VAI"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="UuV-uF-pkH"/>
+                                <include reference="sr8-iE-mpv"/>
+                                <include reference="1ta-bb-0hu"/>
+                                <include reference="bFQ-8X-2cf"/>
+                                <exclude reference="Aa3-SN-d2d"/>
+                                <include reference="TUC-OD-3PB"/>
+                                <include reference="vRa-6b-1mk"/>
+                                <exclude reference="5gI-z9-GOY"/>
+                                <exclude reference="roK-t1-Mzx"/>
+                                <exclude reference="6ri-AO-JYf"/>
+                            </mask>
+                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="FUJ-KJ-Tke" appends="YES" id="acf-Po-WHh"/>
                             <outletCollection property="gestureRecognizers" destination="ZUc-LE-pzC" appends="YES" id="lPO-aL-Nsa"/>
@@ -77,6 +218,7 @@
                     <connections>
                         <outlet property="label" destination="ceY-SK-kyY" id="qJs-1T-31D"/>
                         <outlet property="sceneView" destination="eJ5-b9-nfF" id="jdh-Fi-Y6m"/>
+                        <outlet property="scoreLabel" destination="Lyd-cC-VAI" id="2AN-id-L2g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDo-Fs-HAa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -101,7 +243,10 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="58" y="190"/>
+            <point key="canvasLocation" x="104" y="228.75"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="GameCenterIcon.png" width="512" height="512"/>
+    </resources>
 </document>

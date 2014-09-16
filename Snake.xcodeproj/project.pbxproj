@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		930896C819C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m in Sources */ = {isa = PBXBuildFile; fileRef = 930896C719C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m */; };
+		9330982819C7CF52001B9105 /* GameCenterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9330982719C7CF52001B9105 /* GameCenterView.swift */; };
+		9330982A19C7D5EC001B9105 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9330982919C7D5EC001B9105 /* GameKit.framework */; };
+		9330982C19C7DA31001B9105 /* GameCenterIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9330982B19C7DA31001B9105 /* GameCenterIcon.png */; };
 		9343B6F319C769D2006A58BE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343B6F219C769D2006A58BE /* AppDelegate.swift */; };
 		9343B6FB19C769D2006A58BE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9343B6FA19C769D2006A58BE /* Images.xcassets */; };
 		9343B6FE19C769D2006A58BE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9343B6FC19C769D2006A58BE /* LaunchScreen.xib */; };
 		9343B70A19C769D2006A58BE /* SnakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343B70919C769D2006A58BE /* SnakeTests.swift */; };
 		9343B71419C769E6006A58BE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9343B71319C769E6006A58BE /* ViewController.swift */; };
 		9343B71619C76EB1006A58BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9343B71519C76EB1006A58BE /* Main.storyboard */; };
+		9364E5DD19C7DE610026E8A1 /* GearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9364E5DC19C7DE610026E8A1 /* GearView.swift */; };
 		93A4B9CE19C7B8FF0015B8F5 /* MemeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A4B9CD19C7B8FF0015B8F5 /* MemeLabel.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +35,9 @@
 		930896C519C7AA82000C6BD1 /* Snake-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Snake-Bridging-Header.h"; sourceTree = "<group>"; };
 		930896C619C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath+dqd_arrowhead.h"; sourceTree = "<group>"; };
 		930896C719C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath+dqd_arrowhead.m"; sourceTree = "<group>"; };
+		9330982719C7CF52001B9105 /* GameCenterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterView.swift; sourceTree = "<group>"; };
+		9330982919C7D5EC001B9105 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		9330982B19C7DA31001B9105 /* GameCenterIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GameCenterIcon.png; sourceTree = "<group>"; };
 		9343B6ED19C769D2006A58BE /* Snake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Snake.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9343B6F119C769D2006A58BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9343B6F219C769D2006A58BE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +48,7 @@
 		9343B70919C769D2006A58BE /* SnakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeTests.swift; sourceTree = "<group>"; };
 		9343B71319C769E6006A58BE /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9343B71519C76EB1006A58BE /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		9364E5DC19C7DE610026E8A1 /* GearView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GearView.swift; sourceTree = "<group>"; };
 		93A4B9CD19C7B8FF0015B8F5 /* MemeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9330982A19C7D5EC001B9105 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,7 @@
 		9343B6E419C769D2006A58BE = {
 			isa = PBXGroup;
 			children = (
+				9330982919C7D5EC001B9105 /* GameKit.framework */,
 				9343B6EF19C769D2006A58BE /* Snake */,
 				9343B70619C769D2006A58BE /* SnakeTests */,
 				9343B6EE19C769D2006A58BE /* Products */,
@@ -86,8 +96,11 @@
 				9343B6F219C769D2006A58BE /* AppDelegate.swift */,
 				9343B71319C769E6006A58BE /* ViewController.swift */,
 				93A4B9CD19C7B8FF0015B8F5 /* MemeLabel.swift */,
+				9330982719C7CF52001B9105 /* GameCenterView.swift */,
+				9364E5DC19C7DE610026E8A1 /* GearView.swift */,
 				930896C619C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.h */,
 				930896C719C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m */,
+				9330982B19C7DA31001B9105 /* GameCenterIcon.png */,
 				9343B71519C76EB1006A58BE /* Main.storyboard */,
 				9343B6FA19C769D2006A58BE /* Images.xcassets */,
 				9343B6FC19C769D2006A58BE /* LaunchScreen.xib */,
@@ -205,6 +218,7 @@
 				9343B71619C76EB1006A58BE /* Main.storyboard in Resources */,
 				9343B6FE19C769D2006A58BE /* LaunchScreen.xib in Resources */,
 				9343B6FB19C769D2006A58BE /* Images.xcassets in Resources */,
+				9330982C19C7DA31001B9105 /* GameCenterIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,7 +237,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9343B71419C769E6006A58BE /* ViewController.swift in Sources */,
+				9364E5DD19C7DE610026E8A1 /* GearView.swift in Sources */,
 				9343B6F319C769D2006A58BE /* AppDelegate.swift in Sources */,
+				9330982819C7CF52001B9105 /* GameCenterView.swift in Sources */,
 				93A4B9CE19C7B8FF0015B8F5 /* MemeLabel.swift in Sources */,
 				930896C819C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m in Sources */,
 			);
