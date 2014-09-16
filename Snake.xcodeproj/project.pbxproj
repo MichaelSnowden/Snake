@@ -23,7 +23,6 @@
 		9357BC8719C812850030BBC3 /* nko_colormap.png in Resources */ = {isa = PBXBuildFile; fileRef = 9357BC7E19C812850030BBC3 /* nko_colormap.png */; };
 		9357BC8819C812850030BBC3 /* NKOColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9357BC8019C812850030BBC3 /* NKOColorPickerView.m */; };
 		9357BC8919C812850030BBC3 /* NKOColorPickerView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 9357BC8119C812850030BBC3 /* NKOColorPickerView.podspec */; };
-		9357BC8A19C812850030BBC3 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 9357BC8219C812850030BBC3 /* README.md */; };
 		9357BC8B19C812850030BBC3 /* screenshot-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 9357BC8419C812850030BBC3 /* screenshot-ios.png */; };
 		9364E5DD19C7DE610026E8A1 /* GearView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9364E5DC19C7DE610026E8A1 /* GearView.swift */; };
 		937429EB19C7E9E30054F148 /* SnakeGear.png in Resources */ = {isa = PBXBuildFile; fileRef = 937429EA19C7E9E30054F148 /* SnakeGear.png */; };
@@ -237,6 +236,7 @@
 				TargetAttributes = {
 					9343B6EC19C769D2006A58BE = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = SRLC7WJY9V;
 					};
 					9343B70219C769D2006A58BE = {
 						CreatedOnToolsVersion = 6.0;
@@ -301,7 +301,6 @@
 				9343B6F319C769D2006A58BE /* AppDelegate.swift in Sources */,
 				9330982819C7CF52001B9105 /* GameCenterView.swift in Sources */,
 				93A4B9CE19C7B8FF0015B8F5 /* MemeLabel.swift in Sources */,
-				9357BC8A19C812850030BBC3 /* README.md in Sources */,
 				930896C819C7AA83000C6BD1 /* UIBezierPath+dqd_arrowhead.m in Sources */,
 				9357BC8819C812850030BBC3 /* NKOColorPickerView.m in Sources */,
 			);
@@ -421,9 +420,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Snake/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Snake/Snake-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -434,9 +436,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Snake/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Snake/Snake-Bridging-Header.h";
 			};
 			name = Release;

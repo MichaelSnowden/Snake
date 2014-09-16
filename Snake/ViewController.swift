@@ -23,7 +23,7 @@ enum Difficulty {
 }
 
 typealias Index = (i : Int, j : Int)
-typealias Settings = (difficulty: Difficulty, sound: Bool, borderWidth: CGFloat, tileInset: CGFloat, tileColor: UIColor, borderColor: UIColor)
+typealias Settings = (difficulty: Difficulty, sound: Bool, borderWidth: CGFloat, tileInset: CGFloat, cornerRadius: CGFloat, tileColor: UIColor, borderColor: UIColor)
 
 var gameCenterFeaturesEnabled  = false
 
@@ -98,11 +98,13 @@ class SceneView : UIView {
             createBackground()
         }
     }
-    var settings : Settings = (difficulty: Difficulty.Easy, sound: true, borderWidth: CGFloat(5), tileInset: CGFloat(5), tileColor: UIColor.clearColor(), borderColor: UIColor.blackColor()) {
+    
+    var settings : Settings = (difficulty: Difficulty.Easy, sound: true, borderWidth: CGFloat(5), tileInset: CGFloat(5), cornerRadius: CGFloat(5), tileColor: UIColor.clearColor(), borderColor: UIColor.blackColor()) {
         didSet {
             self.borderWidth = settings.borderWidth
             self.tileColor = settings.tileColor
             self.borderColor = settings.borderColor
+            self.cornerRadius = settings.cornerRadius
             self.tileInset = settings.tileInset
         }
     }
@@ -118,9 +120,16 @@ class SceneView : UIView {
         }
     }
     var tileSideLength : CGFloat!
-    let timeFrameInterval = NSTimeInterval(0.2)
     var gameUpdateTimer : NSTimer?
     var gameStartCountdownTimer : NSTimer?
+    var tapGestureRecognizer : UITapGestureRecognizer?
+    
+    func repaintCharacters() {
+        tiles[coin.i][coin.j].backgroundColor = UIColor.redColor()
+        for segment in snake.segments {
+            tiles[segment.i][segment.j].backgroundColor = UIColor.blackColor()
+        }
+    }
     
     func createBackground() {
         println("Creating background")
@@ -137,7 +146,7 @@ class SceneView : UIView {
                     tile.removeFromSuperview()
                 }
             }
-            tiles.removeAll(keepCapacity: false)
+            tiles.removeAll(keepCapacity: true)
         }
         removeOldTiles()
         
@@ -231,7 +240,7 @@ class SceneView : UIView {
             scoreLabel.text = String(score + 1)
         } else {
             let tail = snake.segments[0]
-            tiles[tail.i][tail.j].backgroundColor = UIColor.greenColor()
+            tiles[tail.i][tail.j].backgroundColor = settings.tileColor
             snake.segments.removeAtIndex(0)
         }
         
@@ -254,6 +263,18 @@ class SceneView : UIView {
         direction = .Right
         
         spawnCoin()
+        
+        gameStartCountdownTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "decrementTimer", userInfo: nil, repeats: true)
+    }
+    
+    func pause() {
+        gameUpdateTimer?.invalidate()
+        gameUpdateTimer = nil
+    }
+    
+    func resume() {
+        label.hidden = false
+        label.text = "2"
         gameStartCountdownTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "decrementTimer", userInfo: nil, repeats: true)
     }
     
@@ -262,10 +283,21 @@ class SceneView : UIView {
         if value > 0 {
             label.text = String(value - 1)
         } else {
+            var difficultyValue : CGFloat
+            
+            switch settings.difficulty {
+            case .Easy:
+                difficultyValue = 1.0
+            case .Medium:
+                difficultyValue = 2.0
+            case .Hard:
+                difficultyValue = 3.0
+            }
+            
             label.hidden = true
             gameStartCountdownTimer!.invalidate()
             gameStartCountdownTimer = nil
-            gameUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(timeFrameInterval, target: self, selector: "update", userInfo: nil, repeats: true)
+            gameUpdateTimer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(0.2 / difficultyValue), target: self, selector: "update", userInfo: nil, repeats: true)
         }
     }
 
@@ -296,10 +328,11 @@ class SceneView : UIView {
         
         label.hidden = false
         label.text = "Game Over!\nTap to restart"
-        gameUpdateTimer!.invalidate()
+        gameUpdateTimer?.invalidate()
         gameUpdateTimer = nil
         
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: "start:"))
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "start:")
+        addGestureRecognizer(tapGestureRecognizer!)
     }
     
     func tryToGoInDirection(newDirection : Direction) {
@@ -341,6 +374,7 @@ class ViewController : UIViewController, SettingsViewControllerDelegate {
     @IBOutlet weak var sceneView: SceneView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var gearView: GearView!
+    var tapGestureRecognizer : UITapGestureRecognizer? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -350,7 +384,8 @@ class ViewController : UIViewController, SettingsViewControllerDelegate {
         
         sceneView.label = label
         sceneView.scoreLabel = scoreLabel
-        sceneView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "start:"))
+        tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "start:")
+        sceneView.addGestureRecognizer(tapGestureRecognizer!)
         
         weak var localPlayer = GKLocalPlayer.localPlayer()
         localPlayer!.authenticateHandler = { (viewController : UIViewController?, error : NSError?) -> Void in
@@ -370,6 +405,23 @@ class ViewController : UIViewController, SettingsViewControllerDelegate {
     }
     
     func goToSettings() {
+        // The game is running
+        if sceneView.gameUpdateTimer != nil {
+            sceneView.pause()
+        }
+        else if sceneView.gameStartCountdownTimer != nil {  // The game is counting down
+            sceneView.gameStartCountdownTimer!.invalidate()
+            sceneView.gameStartCountdownTimer = nil
+        }
+        else {
+            if tapGestureRecognizer?.view != nil { // Game hasn't started
+                sceneView.removeGestureRecognizer(tapGestureRecognizer!)
+            }
+            else if sceneView.tapGestureRecognizer?.view != nil {   // We're at game over
+                sceneView.label.hidden = true
+                sceneView.removeGestureRecognizer(sceneView.tapGestureRecognizer!)
+            }
+        }
         self.performSegueWithIdentifier("goToSettings", sender: self)
     }
     
@@ -379,7 +431,6 @@ class ViewController : UIViewController, SettingsViewControllerDelegate {
             static var onceToken : dispatch_once_t = 0
         }
         dispatch_once(&Static.onceToken) {
-            self.sceneView.createBackground()
             var settings = self.sceneView.settings
             settings.borderWidth = self.sceneView.borderWidth
             settings.tileColor = self.sceneView.tileColor
@@ -414,12 +465,26 @@ class ViewController : UIViewController, SettingsViewControllerDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "goToSettings" {
             let settingsViewController = segue.destinationViewController as SettingsViewController
+            settingsViewController.delegate = self
             settingsViewController.settings = sceneView.settings
         }
     }
     
     // MARK: SettingsViewControllerDelegate
-    func settingsViewController(settingsViewController: SettingsViewController, didFinishWithSettings: Settings) {
-        sceneView.settings = didFinishWithSettings
+    func settingsViewController(settingsViewController: SettingsViewController, didFinishWithSettings settings : Settings, shouldRestartGame : Bool) {
+        
+        sceneView.settings = settings
+        sceneView.createBackground()
+        sceneView.repaintCharacters()
+        
+        if shouldRestartGame == true {
+            sceneView.start()
+        } else {
+            if sceneView.tapGestureRecognizer?.view != nil {    // We're at game over
+                sceneView.start()
+            } else {
+                sceneView.resume()
+            }
+        }
     }
 }
